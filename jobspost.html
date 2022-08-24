@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <script>
+      window.onload = function () {
+        var cookieData = document.cookie;
+        console.log(cookieData);
+        var text = cookieData.split("=");
+        console.log(text[1]);
+        var user_id = text[1]
+        console.log(text[1]);
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function (response) {
+          if (this.status == "200") {
+            var result = JSON.parse(this.response);
+            console.log(result);
+            if (result.status == true) {
+              console.log(result.message.length);
+              let card = ``;
+              for (let i = 0; i < result.message.length; i++) {
+                // console.log(result.message[i].companyName);
+                
+                card += `<div class="card rounded rounded-4 mt-3 w-75">
+        <div class="card-header py-3"><span class="mx-5 fst-italic small">Expires ${result.message[i].expiryDate}</span></div>
+        <div class="card-body">
+          <h5 class="card-title mx-5">${result.message[i].jobTitle}</h5>
+          <p class="card-text mx-5">
+            ${result.message[i].companyName}
+          </p>
+          <p class="card-text mx-5">
+            ${result.message[i].jobDesc}         
+          </p>
+          <a href="#" class="btn btn-secondary ms-5 mb-3">Edit Job</a>
+          <a href="#" class="btn btn-danger ms-2 mb-3">Close Job</a>
+        </div>
+      </div>`;
+              }
+              document.getElementById("jobCard").innerHTML = card;
+            }
+          } else {
+            console.log(this.response);
+          }
+        };
+        xhttp.open(`GET`, `jobpost.php?request=read&userId=${user_id}`);
+        xhttp.send();
+      };
+
+      function logout() {
+        document.cookie = `user_id="";user_email=""`;
+        console.log(document.cookie);
+        setTimeout(
+          () => (window.location.href = "/delonjobs/login_ep.html"),
+          1000
+        );
+      }
+    </script>
+  </head>
+  <body style="background: rgb(242, 242, 242)">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#"
+          ><img src="img_logo.jpg" alt="logo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav justify-content-end flex-grow-1 fw-semibold">
+            <a class="nav-link" href="/delonjobs/profile_ep.html">Profile</a>
+            <!-- <a class="nav-link" href="/delonjobs/jobseeker.html">Profile</a> -->
+            <button
+              type="button"
+              class="rounded bg-danger text-light border px-3"
+              onclick="logout()"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="d-flex flex-column align-items-center">
+      <p class="fw-semibold fs-3 w-75 mt-5">Dashboard > Jobs Posted</p>
+
+      </div>
+    </div>
+
+    <!-- Job List Section -->
+    <!-- <div class="d-flex justify-content-center">
+      <div class="card rounded rounded-4 mt-3 w-75">
+        <div class="card-header py-3"><span class="mx-5 fst-italic small">Expires 12/05/2022</span></div>
+        <div class="card-body">
+          <h5 class="card-title mx-5">Fuel Pump Attendant</h5>
+          <p class="card-text mx-5">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+            fuga quidem possimus quae hic eaque in, labore reiciendis provident
+            qui?
+          </p>
+          <a href="#" class="btn btn-secondary ms-5 mb-3">Edit Job</a>
+          <a href="#" class="btn btn-danger ms-2 mb-3">Close Job</a>
+        </div>
+      </div>
+    </div> -->
+
+    <div
+      id="jobCard"
+      class="d-flex flex-column align-items-center justify-content-center"
+    ></div>
+
+    <!-- <div class="d-flex justify-content-center">
+      <div class="card rounded rounded-4 mt-3 w-75">
+        <div class="card-header py-3"><span class="mx-5 fst-italic small">Expires 12/05/2022</span></div>
+        <div class="card-body">
+          <h5 class="card-title mx-5">Fuel Pump Attendant</h5>
+          <p class="card-text mx-5">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+            fuga quidem possimus quae hic eaque in, labore reiciendis provident
+            qui?
+          </p>
+          <a href="#" class="btn btn-secondary ms-5 mb-3">Edit Job</a>
+          <a href="#" class="btn btn-danger ms-2 mb-3">Close Job</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div class="card rounded rounded-4 mt-3 w-75">
+        <div class="card-header py-3"><span class="mx-5 fst-italic small">Expires 12/05/2022</span></div>
+        <div class="card-body">
+          <h5 class="card-title mx-5">Fuel Pump Attendant</h5>
+          <p class="card-text mx-5">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+            fuga quidem possimus quae hic eaque in, labore reiciendis provident
+            qui?
+          </p>
+          <a href="#" class="btn btn-secondary ms-5 mb-3">Edit Job</a>
+          <a href="#" class="btn btn-danger ms-2 mb-3">Close Job</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div class="card rounded rounded-4 mt-3 w-75">
+        <div class="card-header py-3"><span class="mx-5 fst-italic small">Expires 12/05/2022</span></div>
+        <div class="card-body">
+          <h5 class="card-title mx-5">Fuel Pump Attendant</h5>
+          <p class="card-text mx-5">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+            fuga quidem possimus quae hic eaque in, labore reiciendis provident
+            qui?
+          </p>
+          <a href="#" class="btn btn-secondary ms-5 mb-3">Edit Job</a>
+          <a href="#" class="btn btn-danger ms-2 mb-3">Close Job</a>
+        </div>
+      </div>
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div class="card rounded rounded-4 mt-3 w-75">
+        <div class="card-header py-3"><span class="mx-5 fst-italic small">Expires 12/05/2022</span></div>
+        <div class="card-body">
+          <h5 class="card-title mx-5">Fuel Pump Attendant</h5>
+          <p class="card-text mx-5">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptatem
+            fuga quidem possimus quae hic eaque in, labore reiciendis provident
+            qui?
+          </p>
+          <a href="#" class="btn btn-secondary ms-5 mb-3">Edit Job</a>
+          <a href="#" class="btn btn-danger ms-2 mb-3">Close Job</a>
+        </div>
+      </div>
+    </div> -->
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Delon Jobs</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+  </head>
+  <body>
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#"
+          ><img src="img_logo.jpg" alt="logo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav justify-content-end flex-grow-1 fw-semibold">
+            <a class="nav-link" href="/delonjobs/login_js.html">Login</a>
+            <a class="nav-link" href="/delonjobs/jobseeker.html">Register</a>
+            <button
+              type="button"
+              class="rounded bg-warning text-light border px-3"
+            >
+              Job Post
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Sub Navbar -->
+    <div class="container my-3">
+      <a href="#" class="pe-3 text-dark text-decoration-none">Post Jobs</a>
+      <a href="#" class="pe-3 text-dark text-decoration-none"
+        >Creat Job Alerts</a
+      >
+      <a href="#" class="pe-3 text-dark text-decoration-none">IT Recruitment</a>
+      <a href="#" class="pe-3 text-dark text-decoration-none">Blog</a>
+      <a href="#" class="pe-3 text-dark text-decoration-none">Videos</a>
+      <a href="#" class="pe-3 text-dark text-decoration-none"
+        >Skill Assessment Test in Nigeria</a
+      >
+      <a href="#" class="pe-3 text-dark text-decoration-none">CV Writing</a>
+    </div>
+
+    <div
+      class="text-container text-center py-1 bg-danger text-light position-relative"
+    >
+      <div class="slide">
+        Looking for Quality Jobs? You've come to the right plce
+      </div>
+      <div class="slide">Manage and monitor your Job posts efficiently</div>
+      <div class="slide">Find Jobs with the right tools</div>
+      <a
+        class="previous position-absolute top-50 start-0 translate-middle-y ps-5 text-light"
+        onclick="moveSlide(-1)"
+        ><i class="bi bi-arrow-left-circle"></i
+      ></a>
+      <a
+        class="next position-absolute top-50 end-0 translate-middle-y pe-5 text-light"
+        onclick="moveSlide(1)"
+        ><i class="bi bi-arrow-right-circle"></i
+      ></a>
+    </div>
+
+    <!-- Hero-section -->
+    <section
+      style="
+        background-image: url(https://picsum.photos/id/209/1400);
+        background-size: cover;
+        height: 100vh;
+      "
+      class="position-relative"
+    >
+      <div
+        class="position-absolute bottom-50 start-50 translate-middle text-light"
+      >
+        <h1 class="fs-1 fw-normal text-center mb-5">
+          Latest Jobs in Nigeria – Jobs.delon.ng
+          <p class="fs-5 fw-normal"><small>Over 6000 jobs posted</small></p>
+        </h1>
+        <div class="position-absolute text-light text-center">
+          <label for="" class="fw-bold">Most Searches: </label>
+          <a href="#" class="fst-italic text-light">Accounting & Audit Jobs</a>
+          <a href="#" class="fst-italic text-light">Admin & HR Jobs</a>
+          <a href="#" class="fst-italic text-light">Engineering Jobs</a>
+          <a href="#" class="fst-italic text-light">IT Jobs</a>
+          <a href="#" class="fst-italic text-light">NGO & Development Jobs</a>
+
+          <div class="position-absolute text-light text-center mt-3">
+            <form>
+              <input
+                class="p-2 border text-light"
+                type="text"
+                placeholder="Search Keyword"
+                style="background: rgba(255, 255, 255, 0.075)"
+              />
+              <select
+                class="p-2 text-light"
+                style="background: rgba(255, 255, 255, 0.075)"
+              >
+                <option value="">Select Category</option>
+              </select>
+              <select
+                class="p-2 text-light"
+                style="background: rgba(255, 255, 255, 0.075)"
+              >
+                <option value="">Select Location</option>
+              </select>
+              <button
+                type="button"
+                class="p-2 px-3 border border-0 bg-warning text-light"
+              >
+                Find Jobs
+              </button>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+    <script>
+      var slideIndex = 1;
+      displaySlide(slideIndex);
+
+      function moveSlide(index) {
+        displaySlide((slideIndex += index));
+        // console.log(index);
+      }
+
+      function displaySlide(n) {
+        var i;
+        var totalSlides = document.getElementsByClassName("slide");
+        if (n > totalSlides.length) {
+          slideIndex = 1;
+        }
+        if (n < 1) {
+          slideIndex = totalSlides.length;
+        }
+        for (i = 0; i < totalSlides.length; i++) {
+          totalSlides[i].style.display = "none";
+        }
+        totalSlides[slideIndex - 1].style.display = "block";
+      }
+    </script>
+
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

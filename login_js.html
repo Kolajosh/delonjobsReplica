@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Login Jobseeker</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <script>
+      function login() {
+        var email = document.getElementById("email").value;
+        var password = document.getElementById("password").value;
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function () {
+          var result = JSON.parse(this.response);
+          // console.log(result);
+          if (this.status == "200") {
+            console.log(result.message);
+            if (result.status == true) {
+              document.getElementById("status").innerHTML = `Login Successful.. <br/>Redirecting you in 3..`;
+              document.cookie = `user_id=${result.message.id};user_email=${result.message.email}`;
+              setTimeout(
+                () => (window.location.href = "/delonjobs/profile_js.html"),
+                3000
+              );
+            } else {
+              document.getElementById(
+                "status"
+              ).innerHTML = `${result.message}. <br/>Check Again`;
+            }
+          } else {
+            console.log(this.response);
+          }
+        };
+        xhttp.open(
+          `GET`,
+          `jobseeker.php?request=login&email=${email}&password=${password}`
+        );
+        xhttp.send();
+      }
+    </script>
+  </head>
+  <body>
+    <div class="row g-0">
+      <div
+        class="col-6 w-50"
+        style="
+          background-image: url(https://picsum.photos/id/1/1400/1000);
+          background-size: cover;
+          height: 100vh;
+        "
+      ></div>
+      <div class="col-6 w-50 d-flex justify-content-center align-items-center">
+        <div class="w-100 justify-content-center">
+          <form action="">
+            <center>
+              <div class="input">
+                <p class="my-3 fw-bold">Jobseeker Login</p>
+                <input
+                  class="mb-3 p-2 w-50 rounded border border-3"
+                  type="text"
+                  placeholder="Enter Email"
+                  id="email"
+                  name="email"
+                  required="required"
+                /><br />
+                <input
+                  class="mb-3 p-2 w-50 rounded border border-3"
+                  type="password"
+                  placeholder="Enter Password"
+                  id="password"
+                  name="password"
+                  required="required"
+                /><br />
+              </div>
+              <p class="fst-italic text-end w-50 small">Forgot Password?</p>
+              <p id="status" class="fst-italic small"></p>
+              <button
+                type="button"
+                class="bg-warning w-50 rounded border border-3 border-warning p-2"
+                onclick="login()"
+              >
+                Login
+              </button>
+              <p class="my-3">or</p>
+              <button
+                type="button"
+                onclick="location.href='/delonjobs/login_ep.html'"
+                class="bg-light w-50 rounded border border-3 p-2"
+              >
+                Login as Employer
+              </button>
+              <p class="my-3">
+                <span class="fst-italic">Don't have an account? </span>
+                <span class="fw-bold">
+                  <a
+                    class="text-decoration-none text-dark"
+                    href="/delonjobs/jobseeker.html"
+                    >Register</a
+                  ></span
+                >
+              </p>
+            </center>
+          </form>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>

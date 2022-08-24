@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Register</title>
+    <link
+      href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/css/bootstrap.min.css"
+      rel="stylesheet"
+      integrity="sha384-gH2yIJqKdNHPEq0n4Mqa/HGKIhSkIHeL5AyhkYV8i59U5AR6csBvApHHNl/vI1Bx"
+      crossorigin="anonymous"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
+    />
+    <script>
+      window.onload = function () {
+        var cookieData = document.cookie;
+        console.log(cookieData);
+        var text = cookieData.split("=");
+        console.log(text[1]);
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function (response) {
+          if (this.status == "200") {
+            var result = JSON.parse(this.response);
+            console.log(result);
+            if (result.status == true) {
+              document.getElementById("name").innerHTML = result.message.name;
+              document.getElementById("email").innerHTML = result.message.email;
+              console.log(result.message);
+              console.log(result.message.name);
+            }
+          } else {
+            console.log(this.response);
+          }
+        };
+        xhttp.open(`GET`, `jobseeker.php?request=read&user_id=${text[1]}`);
+        xhttp.send();
+      };
+
+      function logout() {
+        document.cookie = `user_id="";user_email=""`;
+        console.log(document.cookie);
+        setTimeout(
+          () => (window.location.href = "/delonjobs/login_js.html"),
+          1000
+        );
+      }
+    </script>
+  </head>
+  <body style="background: rgb(242, 242, 242)">
+    <!-- Navbar -->
+    <nav class="navbar navbar-expand-lg bg-light">
+      <div class="container">
+        <a class="navbar-brand" href="#"
+          ><img src="img_logo.jpg" alt="logo"
+        /></a>
+        <button
+          class="navbar-toggler"
+          type="button"
+          data-bs-toggle="collapse"
+          data-bs-target="#navbarNavAltMarkup"
+          aria-controls="navbarNavAltMarkup"
+          aria-expanded="false"
+          aria-label="Toggle navigation"
+        >
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
+          <div class="navbar-nav justify-content-end flex-grow-1 fw-semibold">
+            <a class="nav-link " href="/delonjobs/profile_js.html">Dashboard</a>
+            <a class="nav-link" href="/delonjobs/joblist.html">Job Listings</a>
+            <a class="nav-link active" href="/delonjobs/profile_js.html">Profile</a>
+            <button
+              type="button"
+              class="rounded bg-danger text-light border px-3"
+              onclick="logout()"
+            >
+              Logout
+            </button>
+          </div>
+        </div>
+      </div>
+    </nav>
+
+    <!-- Dashboard -->
+    <div class="d-flex flex-column align-items-center">
+      <p class="fw-semibold fs-3 w-75 mt-5">Dashboard</p>
+
+      <!-- Dashboard Cards -->
+      <div
+        class="dashboard-cards w-75 mt-3 px-5 py-5 d-flex g-5 justify-content-between rounded rounded-4"
+        style="box-shadow: 5px 10px 8px #e3e3e3; background: white"
+      >
+        <a
+          href="/delonjobs/joblist.html"
+          class="text-decoration-none text-dark"
+        >
+          <div
+            class="py-4 px-5 rounded rounded-3"
+            style="
+              box-shadow: 5px 7px 8px #e3e3e3;
+              background: rgb(245, 245, 245);
+            "
+          >
+            <span id="jobpost">My Jobs</span><br />
+            <span class="fs-3 fw-semibold">42</span>
+          </div>
+        </a>
+        <a href="" class="text-decoration-none text-dark">
+          <div
+            class="py-4 px-5 rounded rounded-3"
+            style="
+              box-shadow: 5px 7px 8px #e3e3e3;
+              background: rgb(244, 244, 244);
+            "
+          >
+            <span>Applications</span><br />
+            <span class="fs-3 fw-semibold">205</span>
+          </div>
+        </a>
+        <a href="" class="text-decoration-none text-dark">
+          <div
+            class="py-4 px-5 rounded rounded-3"
+            style="
+              box-shadow: 5px 7px 8px #e3e3e3;
+              background: rgb(244, 244, 244);
+            "
+          >
+            <span>Starred Jobs</span><br />
+            <span class="fs-3 fw-semibold">20</span>
+          </div>
+        </a>
+        <a href="" class="text-decoration-none text-dark">
+          <div
+            class="py-4 px-5 rounded rounded-3"
+            style="
+              box-shadow: 5px 7px 8px #e3e3e3;
+              background: rgb(244, 244, 244);
+            "
+          >
+            <span>Invites</span><br />
+            <span class="fs-3 fw-semibold">15</span>
+          </div>
+        </a>
+      </div>
+    </div>
+
+    <!-- User Profile -->
+    <div class="d-flex flex-column align-items-center">
+      <p class="fw-semibold fs-3 w-75 mt-5">User Profile</p>
+      <div
+        class="w-75 mt-3 px-5 py-5 d-flex justify-content-between rounded rounded-4"
+        style="box-shadow: 5px 10px 8px #e3e3e3; background: white"
+      >
+        <div class="">
+          <img
+            class="img-fluid"
+            src="https://picsum.photos/id/1/100"
+            alt=""
+            style="border-radius: 50%"
+          /><br />
+          <span id="name" class="mt-1 fs-4 fw-bold"></span><br />
+          <span id="email" class="mt-5 fw-semibold"></span><br />
+          <p id="companyNumber" class="fst-italic small mt-3 text-muted">
+            You're taking a step at growing your career
+          </p>
+        </div>
+        <div>
+          <button
+            type="button"
+            class="px-3 py-2 rounded rounded-3 bg-primary text-light border-0"
+            onclick="location.href='/delonjobs/joblist.html'"
+          >
+            View Jobs
+          </button>
+        </div>
+      </div>
+    </div>
+    <script
+      src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
+      integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"
+      crossorigin="anonymous"
+    ></script>
+  </body>
+</html>
