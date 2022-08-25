@@ -60,7 +60,7 @@ if ($_GET['request'] == 'save') {
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
-        $query = "SELECT * FROM `jobseeker` where `id` = $userId";
+        $query = "SELECT * FROM `jobseeker` where `id` = '$userId'";
         $result = mysqli_query($connection, $query);
         $records = [];
         if (mysqli_num_rows($result) > 0) {

@@ -20,11 +20,14 @@
         var cookieData = document.cookie;
         console.log(cookieData);
         var text = cookieData.split("=");
-        console.log(text[1]);
+        console.log(text[2]);
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function (response) {
           if (this.status == "200") {
+            console.log(this.response);
             var result = JSON.parse(this.response);
+            console.log(result);
+
             console.log(result);
             if (result.status == true) {
               document.getElementById("name").innerHTML = result.message.name;
@@ -39,7 +42,7 @@
             console.log(this.response);
           }
         };
-        xhttp.open(`GET`, `employer.php?request=read&user_id=${text[1]}`);
+        xhttp.open(`GET`, `employer.php?request=read&user_id=${text[2]}`);
         xhttp.send();
       };
 
