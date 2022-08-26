@@ -128,6 +128,59 @@ if ($_GET['request'] == 'save') {
             $data["message"] = "Failed to delete";
         }
     }
+
+}  else if ($_GET['request'] == 'editjob') { 
+    $database = "customers";
+    $username = "root";
+    $password = "";
+    $host = "localhost";
+
+    $connection = mysqli_connect($host, $username, $password, $database);
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        $editJob_id = $_GET['editJob_id'];
+        $query = 'SELECT * FROM `jobs` WHERE `id` = "'.$editJob_id.'"';
+        $result = mysqli_query($connection, $query);
+        $editjob_row = [];
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)){
+                $editjob = $row;
+            }
+            $data["status"] = true;
+            $data["message"] = $editjob;
+        } else {
+            $data["status"] = false;
+            $data["message"] = "Invalid email or password";
+        }
+    }
+
+}   else if ($_GET['request'] == 'saveEdit') { 
+    $database = "customers";
+    $username = "root";
+    $password = "";
+    $host = "localhost";
+
+    $connection = mysqli_connect($host, $username, $password, $database);
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        $saveEdit_id = $_GET['saveEdit_id'];
+        $companyName = $_GET['companyName'];
+        $jobDesc = $_GET['jobDesc'];
+        $jobTitle = $_GET['jobTitle'];
+        $expiryDate = $_GET['saveEdit_id'];
+        $query = 'UPDATE `jobs` SET `jobTitle` = "'.$jobTitle.'", `companyName`= "'.$companyName.'", `jobDesc`="'.$jobDesc.'", `expiryDate`= "'.$expiryDate.'" WHERE `jobs`.`id` = "'.$saveEdit_id.'" ';
+        $result = mysqli_query($connection, $query);
+        $job_row = [];
+        if ($result !== []) {
+            $data["status"] = true;
+            $data["message"] = $job_row;
+        } else {
+            $data["status"] = false;
+            $data["message"] = "Failed to delete";
+        }
+    }
 }
 
 echo json_encode($data);

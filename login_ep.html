@@ -16,6 +16,7 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
     />
     <script>
+      // function to login
       function login() {
         var email = document.getElementById("email").value;
         var password = document.getElementById("password").value;
@@ -28,7 +29,9 @@
               document.getElementById(
                 "status"
               ).innerHTML = `Login Successful..  <br/>Redirecting you in 3..`;
-              document.cookie = `user_id=${result.message.id}; user_email=${result.message.email}; user_name=${result.message.name}`;
+              document.cookie = `user_id=${result.message.id}; path=/delonjobs/profile_ep.html;`;
+
+              // timeoue to redirect to another page
               setTimeout(
                 () => (window.location.href = "/delonjobs/profile_ep.html"),
                 3000
@@ -48,6 +51,8 @@
         );
         xhttp.send();
       }
+      document.cookie = ``;
+      console.log(document.cookie);
     </script>
   </head>
   <body>

@@ -26,8 +26,10 @@
           if (this.status == "200") {
             console.log(result.message);
             if (result.status == true) {
-              document.getElementById("status").innerHTML = `Login Successful.. <br/>Redirecting you in 3..`;
-              document.cookie = `user_id=${result.message.id};user_email=${result.message.email}`;
+              document.getElementById(
+                "status"
+              ).innerHTML = `Login Successful.. <br/>Redirecting you in 3..`;
+              document.cookie = `user_id=${result.message.id}; path=/delonjobs/profile_js.html`;
               setTimeout(
                 () => (window.location.href = "/delonjobs/profile_js.html"),
                 3000
@@ -46,6 +48,7 @@
           `jobseeker.php?request=login&email=${email}&password=${password}`
         );
         xhttp.send();
+        document.cookie = ``;
       }
     </script>
   </head>

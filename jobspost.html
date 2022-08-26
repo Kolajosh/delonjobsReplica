@@ -17,8 +17,9 @@
     />
     <script>
        var cookieData = document.cookie;
-        var text = cookieData.split("=");
-        var user_id = text[2]
+       console.log(cookieData);
+       var user_id = getCookie("user_id");
+        console.log(user_id);
     // Onload function to display all jobs the employer has posted
       window.onload = function () {
         const xhttp = new XMLHttpRequest();
@@ -38,7 +39,7 @@
           <p class="card-text mx-5">
             ${result.message[i].jobDesc}         
           </p>
-          <a href="#" class="btn btn-secondary ms-5 mb-3">Edit Job</a>
+          <a href="/delonjobs/jobEdit.html" class="btn btn-secondary ms-5 mb-3" onclick=editJob(${result.message[i].id})>Edit Job</a>
           <a href="#" class="btn btn-warning ms-2 mb-3">Close Job</a>
           <a href="#" class="btn btn-danger ms-2 mb-3" onclick=deleteJob(${result.message[i].id})>Delete Job</a>
         </div>
@@ -54,9 +55,18 @@
         xhttp.send();
       };
 
+      function getCookie(name) {
+          const value = `; ${document.cookie}`;
+          const parts = value.split(`; ${name}=`);
+          if (parts.length === 2) {
+            return parts.pop().split(";").shift();
+          }
+        }
+
       // onclick function to delete a post
       function deleteJob(param){
         var jobId = param.toString()
+        console.log(jobId);
         const xhttp2 = new XMLHttpRequest()
         xhttp2.onload = function (response) {
           var result = JSON.parse(this.response);
@@ -66,13 +76,19 @@
           }
         }
         xhttp2.open(`GET`, `jobpost.php?request=delete&jobId=${jobId}`)
-        console.log(this.response)
         xhttp2.send()
+      }
+
+      // onclick function to edit a post
+      function editJob(param){
+        var jodId = param.toString()
+        document.cookie = `editJob_id=${+param}; path=/delonjobs/jobEdit.html;`
+        console.log(document.cookie);
       }
 
       // onclick function to logouut
       function logout() {
-        document.cookie = `user_id="";user_email=""`;
+        document.cookie = ``;
         console.log(document.cookie);
         setTimeout(
           () => (window.location.href = "/delonjobs/login_ep.html"),

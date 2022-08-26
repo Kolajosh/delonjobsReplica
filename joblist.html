@@ -62,7 +62,7 @@
       };
 
       function viewDetails(param) {
-        document.cookie = `job_id=`+param;
+        document.cookie = `job_id=${+param}; path=/delonjobs/jobDetails.html`;
         console.log(document.cookie);
         console.log(param);
       }

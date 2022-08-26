@@ -17,10 +17,7 @@
     />
     <script>
       window.onload = function () {
-        var cookieData = document.cookie;
-        console.log(cookieData);
-        var text = cookieData.split("=");
-        console.log(text[2]);
+        var user_id = getCookie("user_id");
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function (response) {
           if (this.status == "200") {
@@ -29,22 +26,40 @@
             if (result.status == true) {
               document.getElementById("name").innerHTML = result.message.name;
               document.getElementById("email").innerHTML = result.message.email;
-              console.log(result.message);
-              console.log(result.message.name);
             }
           } else {
             console.log(this.response);
           }
         };
-        xhttp.open(`GET`, `jobseeker.php?request=read&user_id=${text[2]}`);
+        xhttp.open(`GET`, `jobseeker.php?request=read&user_id=${user_id}`);
         xhttp.send();
       };
 
+      function jobListPage() {
+        var user_id = getCookie("user_id");
+        console.log(user_id);
+        document.cookie = `user_id=${user_id}; path=/delonjobs/jobslist.html`;
+        setTimeout(
+          () => (window.location.href = "/delonjobs/joblist.html"),
+          1500
+        );
+      }
+
+      // to get cookie name
+      function getCookie(name) {
+        const value = `; ${document.cookie}`;
+        const parts = value.split(`; ${name}=`);
+        if (parts.length === 2) {
+          return parts.pop().split(";").shift();
+        }
+      }
+
+      // function to logout
       function logout() {
-        document.cookie = `user_id="";user_email=""`;
+        document.cookie = ``;
         console.log(document.cookie);
         setTimeout(
-          () => (window.location.href = "/delonjobs/login_js.html"),
+          () => (window.location.href = "/delonjobs/login_ep.html"),
           1000
         );
       }
@@ -70,9 +85,11 @@
         </button>
         <div class="collapse navbar-collapse" id="navbarNavAltMarkup">
           <div class="navbar-nav justify-content-end flex-grow-1 fw-semibold">
-            <a class="nav-link " href="/delonjobs/profile_js.html">Dashboard</a>
+            <a class="nav-link" href="/delonjobs/profile_js.html">Dashboard</a>
             <a class="nav-link" href="/delonjobs/joblist.html">Job Listings</a>
-            <a class="nav-link active" href="/delonjobs/profile_js.html">Profile</a>
+            <a class="nav-link active" href="/delonjobs/profile_js.html"
+              >Profile</a
+            >
             <button
               type="button"
               class="rounded bg-danger text-light border px-3"
@@ -94,10 +111,7 @@
         class="dashboard-cards w-75 mt-3 px-5 py-5 d-flex g-5 justify-content-between rounded rounded-4"
         style="box-shadow: 5px 10px 8px #e3e3e3; background: white"
       >
-        <a
-          href="/delonjobs/joblist.html"
-          class="text-decoration-none text-dark"
-        >
+        <a onclick="jobListPage()" class="text-decoration-none text-dark">
           <div
             class="py-4 px-5 rounded rounded-3"
             style="
