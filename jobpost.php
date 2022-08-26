@@ -67,7 +67,7 @@ if ($_GET['request'] == 'save') {
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
-        $query = "SELECT * FROM `jobs` WHERE `userId` = $userId ORDER BY `jobs`.`expiryDate` DESC";
+        $query = "SELECT * FROM `jobs` WHERE `userId` = '$userId' ORDER BY `jobs`.`expiryDate` DESC";
         $result = mysqli_query($connection, $query);
         $records = [];
         if (mysqli_num_rows($result) > 0) {
@@ -102,6 +102,30 @@ if ($_GET['request'] == 'save') {
         } else {
             $data["status"] = false;
             $data["message"] = "Invalid email or password";
+        }
+    }
+
+    //statement to delete job post from db
+}  else if ($_GET['request'] == 'delete') { 
+    $database = "customers";
+    $username = "root";
+    $password = "";
+    $host = "localhost";
+
+    $connection = mysqli_connect($host, $username, $password, $database);
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        $jobId = $_GET['jobId'];
+        $query = 'DELETE FROM `jobs` WHERE `id` = "'.$jobId.'"';
+        $result = mysqli_query($connection, $query);
+        $job_row = [];
+        if ($result !== []) {
+            $data["status"] = true;
+            $data["message"] = $job_row;
+        } else {
+            $data["status"] = false;
+            $data["message"] = "Failed to delete";
         }
     }
 }

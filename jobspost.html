@@ -16,24 +16,18 @@
       href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.9.1/font/bootstrap-icons.css"
     />
     <script>
-      window.onload = function () {
-        var cookieData = document.cookie;
-        console.log(cookieData);
+       var cookieData = document.cookie;
         var text = cookieData.split("=");
-        console.log(text[1]);
-        var user_id = text[1]
-        console.log(text[1]);
+        var user_id = text[2]
+    // Onload function to display all jobs the employer has posted
+      window.onload = function () {
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function (response) {
           if (this.status == "200") {
             var result = JSON.parse(this.response);
-            console.log(result);
             if (result.status == true) {
-              console.log(result.message.length);
               let card = ``;
-              for (let i = 0; i < result.message.length; i++) {
-                // console.log(result.message[i].companyName);
-                
+              for (let i = 0; i < result.message.length; i++) {                
                 card += `<div class="card rounded rounded-4 mt-3 w-75">
         <div class="card-header py-3"><span class="mx-5 fst-italic small">Expires ${result.message[i].expiryDate}</span></div>
         <div class="card-body">
@@ -45,7 +39,8 @@
             ${result.message[i].jobDesc}         
           </p>
           <a href="#" class="btn btn-secondary ms-5 mb-3">Edit Job</a>
-          <a href="#" class="btn btn-danger ms-2 mb-3">Close Job</a>
+          <a href="#" class="btn btn-warning ms-2 mb-3">Close Job</a>
+          <a href="#" class="btn btn-danger ms-2 mb-3" onclick=deleteJob(${result.message[i].id})>Delete Job</a>
         </div>
       </div>`;
               }
@@ -59,6 +54,23 @@
         xhttp.send();
       };
 
+      // onclick function to delete a post
+      function deleteJob(param){
+        var jobId = param.toString()
+        const xhttp2 = new XMLHttpRequest()
+        xhttp2.onload = function (response) {
+          var result = JSON.parse(this.response);
+          if(result.status == true){
+            alert("Post Deleted Successfully");
+            setTimeout(location.reload(), 2000);
+          }
+        }
+        xhttp2.open(`GET`, `jobpost.php?request=delete&jobId=${jobId}`)
+        console.log(this.response)
+        xhttp2.send()
+      }
+
+      // onclick function to logouut
       function logout() {
         document.cookie = `user_id="";user_email=""`;
         console.log(document.cookie);
