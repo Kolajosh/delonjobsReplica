@@ -97,6 +97,29 @@ if ($_GET['request'] == 'save') {
             $data["message"] = "Invalid email or password";
         }
     }
+
+
+} else if ($_GET['request'] == 'readall') {
+    $database = "customers";
+    $username = "root";
+    $password = "";
+    $host = "localhost";
+
+    $connection = mysqli_connect($host, $username, $password, $database);
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        $query = "SELECT * FROM `jobseeker` ";
+        $result = mysqli_query($connection, $query);
+        $records = [];
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)) {
+                $records[]= $row;
+            }
+            $data["status"] = true;
+            $data["message"] = $records;
+        }
+    }
 }
 
 echo json_encode($data);

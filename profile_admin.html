@@ -55,6 +55,16 @@
         );
       }
 
+      function joobseekerListPage() {
+        var user_id = getCookie("user_id");
+        console.log(user_id);
+        document.cookie = `user_id=${user_id}; path=/delonjobs/allJobseekers.html`;
+        setTimeout(
+          () => (window.location.href = "/delonjobs/allJobseekers.html"),
+          1500
+        );
+      }
+
       // to get cookie name
       function getCookie(name) {
         const value = `; ${document.cookie}`;
@@ -145,7 +155,10 @@
             <span class="fs-3 fw-semibold">205</span>
           </div>
         </a>
-        <a href="" class="text-decoration-none text-dark">
+        <a
+          onclick="joobseekerListPage()"
+          class="text-decoration-none text-dark"
+        >
           <div
             class="py-4 px-5 rounded rounded-3"
             style="
