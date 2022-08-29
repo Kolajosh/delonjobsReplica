@@ -140,7 +140,7 @@
             "
           >
             <span id="jobpost">All Jobs</span><br />
-            <span class="fs-3 fw-semibold">42</span>
+            <span class="fs-3 fw-semibold" id="all_jobs"></span>
           </div>
         </a>
         <a onclick="EmployerListPage()" class="text-decoration-none text-dark">
@@ -151,8 +151,8 @@
               background: rgb(244, 244, 244);
             "
           >
-            <span>All Emloyers</span><br />
-            <span class="fs-3 fw-semibold">205</span>
+            <span>All Employers</span><br />
+            <span class="fs-3 fw-semibold" id="all_employers"></span>
           </div>
         </a>
         <a
@@ -167,7 +167,7 @@
             "
           >
             <span>All Jobseekers</span><br />
-            <span class="fs-3 fw-semibold">20</span>
+            <span class="fs-3 fw-semibold" id="all_jobseekers"></span>
           </div>
         </a>
         <a href="" class="text-decoration-none text-dark">
@@ -216,6 +216,60 @@
         </div>
       </div>
     </div>
+    <script>
+      window.onload = function () {
+        const xhttp = new XMLHttpRequest();
+        xhttp.onload = function (response) {
+          if (this.status == "200") {
+            var result = JSON.parse(this.response);
+            console.log(result);
+            if (result.status == true) {
+              document.getElementById("all_employers").innerHTML =
+                result.message.length;
+              // document.getElementById("email").innerHTML = result.message.email;
+            }
+          } else {
+            console.log(this.response);
+          }
+        };
+        xhttp.open(`GET`, `employer.php?request=readall`);
+        xhttp.send();
+
+        const xhttp1 = new XMLHttpRequest();
+        xhttp1.onload = function (response) {
+          if (this.status == "200") {
+            var result = JSON.parse(this.response);
+            console.log(result);
+            if (result.status == true) {
+              document.getElementById("all_jobseekers").innerHTML =
+                result.message.length;
+              // document.getElementById("email").innerHTML = result.message.email;
+            }
+          } else {
+            console.log(this.response);
+          }
+        };
+        xhttp1.open(`GET`, `jobseeker.php?request=readall`);
+        xhttp1.send();
+
+        const xhttp2 = new XMLHttpRequest();
+        xhttp2.onload = function (response) {
+          if (this.status == "200") {
+            var result = JSON.parse(this.response);
+            console.log(result);
+            if (result.status == true) {
+              document.getElementById("all_jobs").innerHTML =
+                result.message.length;
+              // document.getElementById("email").innerHTML = result.message.email;
+            }
+          } else {
+            console.log(this.response);
+          }
+        };
+        xhttp2.open(`GET`, `joblist.php?request=read`);
+        xhttp2.send();
+      };
+    </script>
     <script
       src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.0/dist/js/bootstrap.bundle.min.js"
       integrity="sha384-A3rJD856KowSb7dwlZdYEkO39Gagi7vIsF0jrRAoQmDKKtQBHUuLZ9AsSv4jD4Xa"

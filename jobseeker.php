@@ -109,7 +109,7 @@ if ($_GET['request'] == 'save') {
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     } else {
-        $query = "SELECT * FROM `jobseeker` ";
+        $query = "SELECT * FROM `jobseeker`";
         $result = mysqli_query($connection, $query);
         $records = [];
         if (mysqli_num_rows($result) > 0) {
