@@ -94,11 +94,11 @@
         <thead>
           <tr>
             <th>ID</th>
-            <th>User ID</th>
-            <th>Job Title</th>
+            <th>Employer ID</th>
+            <th>Email</th>
             <th>Company Name</th>
-            <th>Job Description</th>
-            <th>Expiry Date</th>
+            <th>Comany Number</th>
+            <th>Password</th>
           </tr>
         </thead>
       </table>
@@ -107,21 +107,21 @@
     <script>
       $(document).ready(function () {
         $.ajax({
-          url: "http://localhost/delonjobs/joblist.php?request=read",
+          url: "http://localhost/delonjobs/employer.php?request=readall",
           method: "GET",
           dataType: "JSON",
           dataSrc: "",
           success: function (data) {
-            console.log(data);
+            console.log(data.message);
             $("#jobTable").DataTable({
               data: data.message,
               columns: [
                 { data: "id" },
-                { data: "userId" },
-                { data: "jobTitle" },
-                { data: "companyName" },
-                { data: "jobDesc" },
-                { data: "expiryDate" },
+                { data: "name" },
+                { data: "email" },
+                { data: "company_name" },
+                { data: "company_no" },
+                { data: "password" },
               ],
             });
           },
