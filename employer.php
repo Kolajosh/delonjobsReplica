@@ -128,6 +128,84 @@ if ($_GET['request'] == 'save') {
             $data["message"] = $records;
         }
     }
+    
+}   else if ($_GET['request'] == 'editUser') { 
+    $database = "customers";
+    $username = "root";
+    $password = "";
+    $host = "localhost";
+
+    $connection = mysqli_connect($host, $username, $password, $database);
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        $Id = $_GET['employerId'];
+        $query = "SELECT * FROM `employer` WHERE `id` = '$Id'";
+        $result = mysqli_query($connection, $query);
+        $employerId_row = [];
+        if (mysqli_num_rows($result) > 0) {
+            while ($row = mysqli_fetch_assoc($result)){
+                $employerId_row = $row;
+            }
+            $data["status"] = true;
+            $data["message"] = $employerId_row;
+        } else {
+            $data["status"] = false;
+            $data["message"] = "Invalid email or password";
+        }
+    }
+
+}   else if ($_GET['request'] == 'saveEdit') { 
+    $database = "customers";
+    $username = "root";
+    $password = "";
+    $host = "localhost";
+
+    $connection = mysqli_connect($host, $username, $password, $database);
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        $employerId = $_GET['employerId'];
+        $name = $_GET['name'];
+        $email = $_GET['email'];
+        $companyName = $_GET['companyName'];
+        $companyNo = $_GET['companyNo'];
+        $password = $_GET['password'];
+        $query = 'UPDATE `employer` SET `name` = "'.$name.'", `email`= "'.$email.'", `company_name`= "'.$companyName.'", `company_no`="'.$companyNo.'", `password`= "'.$password.'" WHERE `employer`.`id` = "'.$employerId.'" ';
+        $result = mysqli_query($connection, $query);
+        $job_row = [];
+        if ($result !== []) {
+            $data["status"] = true;
+            $data["message"] = $job_row;
+        } else {
+            $data["status"] = false;
+            $data["message"] = "Failed to delete";
+        }
+    }
+}   else if ($_GET['request'] == 'deleteUser') { 
+    $database = "customers";
+    $username = "root";
+    $password = "";
+    $host = "localhost";
+
+    $connection = mysqli_connect($host, $username, $password, $database);
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        $employerId = $_GET['employerId'];
+        $query = "DELETE FROM `employer` WHERE `employer`.`id` = '$employerId'";
+        $result = mysqli_query($connection, $query);
+        $job_row = [];
+        if ($result !== []) {
+            $data["status"] = true;
+            $data["message"] = $job_row;
+        } else {
+            $data["status"] = false;
+            $data["message"] = "Failed to delete";
+        }
+    }
+
 }
+
 echo json_encode($data);
 exit();
