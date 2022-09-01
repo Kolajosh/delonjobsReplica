@@ -19,17 +19,13 @@
       window.onload = function () {
         var user_id = getCookie("user_id");
         console.log(user_id);
-        // var cookieData = document.cookie;
         console.log(document.cookie);
-        // var text = cookieData.split("=");
-        // console.log(text);
         const xhttp = new XMLHttpRequest();
         xhttp.onload = function (response) {
           if (this.status == "200") {
             console.log(this.response);
             var result = JSON.parse(this.response);
             console.log(result);
-
             console.log(result);
             if (result.status == true) {
               document.getElementById("name").innerHTML = result.message.name;

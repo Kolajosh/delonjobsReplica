@@ -104,7 +104,7 @@ if ($_GET['request'] == 'save') {
             $data["message"] = "Invalid email or password";
         }
     }
-} else if ($_GET['request'] == 'jobdetails') { 
+} else if ($_GET['request'] == 'jobDetails') { 
     $database = "customers";
     $username = "root";
     $password = "";
@@ -114,8 +114,8 @@ if ($_GET['request'] == 'save') {
     if (!$connection) {
         die("Connection failed: " . mysqli_connect_error());
     }else {
-        $job_id = $_GET['job_id'];
-        $query = "SELECT * FROM `jobs` WHERE `id` = '$job_id'";
+        $jobId = $_GET['jobId'];
+        $query = "SELECT * FROM `jobs` WHERE `id` = '$jobId'";
         $result = mysqli_query($connection, $query);
         $job_row = [];
         if (mysqli_num_rows($result) > 0) {
@@ -129,6 +129,55 @@ if ($_GET['request'] == 'save') {
             $data["message"] = "Invalid Job Id";
         }
     }
+} else if ($_GET['request'] == 'saveEdit') { 
+    $database = "customers";
+    $username = "root";
+    $password = "";
+    $host = "localhost";
+
+    $connection = mysqli_connect($host, $username, $password, $database);
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        $jobId = $_GET['jobId'];
+        $jobTitle = $_GET['jobTitle'];
+        $companyName = $_GET['companyName'];
+        $jobDesc = $_GET['jobDesc'];
+        $expiryDate = $_GET['expiryDate'];
+        $query = "UPDATE `jobs` SET `jobTitle` = '$jobTitle', `companyName`= '$companyName', `jobDesc`= '$jobDesc', `expiryDate`='$expiryDate' WHERE `id` = '$jobId' ";
+        $result = mysqli_query($connection, $query);
+        $job_row = [];
+        if ($result !== []) {
+            $data["status"] = true;
+            $data["message"] = $job_row;
+        } else {
+            $data["status"] = false;
+            $data["message"] = "Failed to delete";
+        }
+    }
+}   else if ($_GET['request'] == 'deleteJob') { 
+    $database = "customers";
+    $username = "root";
+    $password = "";
+    $host = "localhost";
+
+    $connection = mysqli_connect($host, $username, $password, $database);
+    if (!$connection) {
+        die("Connection failed: " . mysqli_connect_error());
+    } else {
+        $jobId = $_GET['jobId'];
+        $query = "DELETE FROM `jobs` WHERE `jobs`.`id` = '$jobId'";
+        $result = mysqli_query($connection, $query);
+        $jobId_row = [];
+        if ($result !== []) {
+            $data["status"] = true;
+            $data["message"] = $jobId_row;
+        } else {
+            $data["status"] = false;
+            $data["message"] = "Failed to delete";
+        }
+    }
+
 }
 
 echo json_encode($data);
